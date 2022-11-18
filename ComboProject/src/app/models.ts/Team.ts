@@ -17,4 +17,8 @@ export class Team{
         return this.top.toString() +  '/' + this.jung.toString() + '/' + this.mid.toString() + '/' + this.adc.toString() + '/' + this.supp.toString() 
     }
 
+    public iterable(){
+        return [this.top, this.jung, this.mid, this.adc, this.supp]
+    }
+
 }

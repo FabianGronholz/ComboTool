@@ -10,13 +10,18 @@ import { TrelloService } from './services/trello.service';
 export class AppComponent implements OnInit {
   title = 'ComboProject';
 
-  public team!: Team;
+  public team: Team = new Team();
 
   constructor(public trello: TrelloService){}
 
   public ngOnInit(): void {
    this.trello.getCards()
    //this.trello.createCard('Test', new Team().toArray())
+   this.trello.teamObservable.subscribe({
+    next: value => {
+      this.team = value
+    }
+   })
   }
 
 

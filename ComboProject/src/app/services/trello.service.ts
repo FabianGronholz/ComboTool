@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Team } from '../models.ts/Team';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -8,6 +9,9 @@ import { Team } from '../models.ts/Team';
 })
 export class TrelloService {
   constructor(public http: HttpClient) {}
+  public team!: Team;
+  public teamSubject = new BehaviorSubject<Team>(new Team)
+  public teamObservable = this.teamSubject.asObservable();
 
   public createCard(name: string, desc: string) {
     this.http
@@ -71,6 +75,7 @@ export class TrelloService {
               }
           }
           console.log(team)
+          this.teamSubject.next(team)
         },
       });
   }
