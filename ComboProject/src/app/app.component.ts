@@ -13,7 +13,7 @@ import { TrelloService } from './services/trello.service';
 export class AppComponent implements OnInit {
   title = 'ComboProject';
 
-  public team: Team = new Team([],[],[],[],[]);
+  public teamArray: Team[] = [new Team([],[],[],[],[])];
 
   constructor(public trello: TrelloService,
    public matDialog: MatDialog){}
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
    this.trello.getCards()
    this.trello.teamObservable.subscribe({
     next: value => {
-      this.team = value
+      this.teamArray = value
     }
    })
   }
