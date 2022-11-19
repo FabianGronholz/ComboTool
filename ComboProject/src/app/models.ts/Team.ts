@@ -1,24 +1,33 @@
-export class Team{
-    top: string[];
-    jung: string[];
-    mid: string[];
-    adc: string[];
-    supp: string[];
+export class Team {
+  top: string[];
+  jung: string[];
+  mid: string[];
+  adc: string[];
+  supp: string[];
 
-    constructor(){
-        this.top = [];
-        this.jung = [];
-        this.mid = [];
-        this.adc = [];
-        this.supp = [];
-    }
+  constructor() {
+    this.top = [];
+    this.jung = [];
+    this.mid = [];
+    this.adc = [];
+    this.supp = [];
+  }
 
-    public toArray(){
-        return this.top.toString() +  '/' + this.jung.toString() + '/' + this.mid.toString() + '/' + this.adc.toString() + '/' + this.supp.toString() 
-    }
+  public toString() {
+    return (
+      this.top.toString() +
+      '/' +
+      this.jung.toString() +
+      '/' +
+      this.mid.toString() +
+      '/' +
+      this.adc.toString() +
+      '/' +
+      this.supp.toString()
+    );
+  }
 
-    public iterable(){
-        return [this.top, this.jung, this.mid, this.adc, this.supp]
-    }
-
+  public iterable() {
+    return [this.top, this.jung, this.mid, this.adc, this.supp];
+  }
 }

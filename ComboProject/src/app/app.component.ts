@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
    this.trello.getCards()
-   //this.trello.createCard('Test', new Team().toArray())
    this.trello.teamObservable.subscribe({
     next: value => {
       this.team = value
