@@ -15,7 +15,7 @@ import { TrelloService } from './services/trello.service';
 export class AppComponent implements OnInit {
   title = 'ComboProject';
 
-  public teamArray: Team[] = [new Team([''],[],[],[],[],[])];
+  public teamArray: Team[] = [new Team('')];
 
   constructor(public trello: TrelloService,
    public matDialog: MatDialog){}
@@ -25,6 +25,14 @@ export class AppComponent implements OnInit {
    this.trello.teamObservable.subscribe({
     next: value => {
       this.teamArray = value
+      console.log(this.teamArray)
+      this.teamArray.forEach(value => {
+        value.lanes.forEach(value => {
+          if(value[0] == ''){
+            value.splice(0)
+          }
+        })
+      })
     }
    })
   }

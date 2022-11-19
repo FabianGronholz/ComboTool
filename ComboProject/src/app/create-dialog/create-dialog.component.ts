@@ -23,7 +23,9 @@ export class CreateDialogComponent implements OnInit {
   }
 
   send(){
-    this.trello.createCard(this.combName, new Team([''],[this.top],[this.jung],[this.mid],[this.adc],[this.supp]).toString())
+    let team = new Team('')
+    team.setLanes(this.top, this.jung, this.mid, this.adc, this.supp)
+    this.trello.createCard(this.combName, team.toString())
   }
 
 }

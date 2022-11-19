@@ -5,7 +5,7 @@
   <div id="content" class="w-full h-[90%] flex flex-row gap-2">
     <div *ngFor="let team of teamArray; let i = index">
       <div>{{team.getName()}}</div>
-    <div class="flex flex-row" *ngFor="let lane of team.iterable(); let j = index">
+    <div class="flex flex-row" *ngFor="let lane of team.lanes; let j = index">
       <div *ngFor="let champ of lane">
         <div class="w-[10vh] h-[10vh] relative">
           <img

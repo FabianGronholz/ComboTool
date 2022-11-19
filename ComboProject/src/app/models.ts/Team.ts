@@ -1,67 +1,42 @@
 export class Team {
-  name: string[];
-  public top: string[];
-  public jung: string[];
-  public mid: string[];
-  public adc: string[];
-  public supp: string[];
+  name: string;
+  public lanes!: string[][];
 
-  constructor(name: string[], top: string[], jung: string[], mid: string[], adc: string[], supp: string[]) {
+  constructor(name: string) {
     this.name = name;
-    this.top = top;
-    this.jung = jung;
-    this.mid = mid;
-    this.adc = adc;
-    this.supp = supp;
+    this.lanes = [[], [], [], [], []];
   }
-
 
   public toString() {
-    return (
-      this.top.toString() +
-      '/' +
-      this.jung.toString() +
-      '/' +
-      this.mid.toString() +
-      '/' +
-      this.adc.toString() +
-      '/' +
-      this.supp.toString()
-    );
-  }
-
-  public iterable() {
-    return [this.top, this.jung, this.mid, this.adc, this.supp];
-  }
-
-  public getTop(){
-    return this.top
-  }
-
-  public setAll(){
-    if(this.top[0] == ''){this.top = [];}
+    let returnString = '';
+    this.lanes.forEach((value) => {
+      returnString += (value.toString() + '/');
+    });
+    return returnString
     
-    if(this.supp[0] == ''){this.supp = [];}
-  }
-
-  public cleanUp(){
-    this.setAll()
   }
 
   private cardId: string = '';
-  public setId(x: string){
+  public setId(x: string) {
     this.cardId = x;
   }
-  public getId(){
-    return this.cardId
+  public getId() {
+    return this.cardId;
   }
-  private readeblename = "";
-  public setName(x:string){
-      this.readeblename = x;
+  private readeblename = '';
+  public setName(x: string) {
+    this.readeblename = x;
   }
-  public getName(){
-    return this.readeblename
+  public getName() {
+    return this.readeblename;
   }
 
-
+  public setLanes(a: string, b:string, c:string, d:string, e:string){
+      this.lanes[0].push(a)
+      this.lanes[1].push(b)
+      this.lanes[2].push(c)
+      this.lanes[3].push(d)
+      this.lanes[4].push(e)
+      console.log(this.lanes)
+  }
 }

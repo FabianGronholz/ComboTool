@@ -10,7 +10,7 @@ export class TrelloService {
   constructor(public http: HttpClient) {}
   public team!: Team;
   public teamSubject = new BehaviorSubject<Team[]>([
-    new Team([''], [], [], [], [], []),
+    new Team(''),
   ]);
   public teamObservable = this.teamSubject.asObservable();
 
@@ -75,24 +75,24 @@ export class TrelloService {
             let reresult: string = result[i].desc;
             //@ts-ignore
             let cardId: string = result[i].id;
-            let team: Team = new Team([''], [], [], [], [], []);
+            let team: Team = new Team('');
             team.setId(cardId);
             //@ts-ignore
             team.setName(result[i].name);
-            let aktuelleStelle: string[] = team.top;
+            let aktuelleStelle: number = 0;
             let currentString = '';
             const regexLetter: RegExp = new RegExp('[a-zA-Z]');
             const regexKomma: RegExp = new RegExp(',');
             const regexSlash: RegExp = new RegExp('/');
             let lastWasKomma = false;
-            team.name = ['Combo' + i];
+            team.name = 'Combo' + i;
             for (let i = 0; i < reresult.length; i++) {
               if (reresult.charAt(i).match(regexLetter)) {
                 currentString += reresult.charAt(i);
                 lastWasKomma = false;
               } else if (reresult.charAt(i).match(regexKomma)) {
                 if (!lastWasKomma && i != 0) {
-                  aktuelleStelle.push(currentString);
+                  team.lanes[aktuelleStelle].push(currentString);
                   currentString = '';
                   lastWasKomma = true;
                 } else {
@@ -101,45 +101,17 @@ export class TrelloService {
               } else if (reresult.charAt(i).match(regexSlash)) {
                 if (!lastWasKomma) {
                   lastWasKomma = true;
-                  aktuelleStelle.push(currentString);
+                  team.lanes[aktuelleStelle].push(currentString);
                   currentString = '';
-                  switch (aktuelleStelle) {
-                    case team.top:
-                      aktuelleStelle = team.jung;
-                      break;
-                    case team.jung:
-                      aktuelleStelle = team.mid;
-                      break;
-                    case team.mid:
-                      aktuelleStelle = team.adc;
-                      break;
-                    case team.adc:
-                      aktuelleStelle = team.supp;
-                      break;
-                    default:
-                  }
+                  aktuelleStelle += 1
                 } else if (lastWasKomma) {
-                  switch (aktuelleStelle) {
-                    case team.top:
-                      aktuelleStelle = team.jung;
-                      break;
-                    case team.jung:
-                      aktuelleStelle = team.mid;
-                      break;
-                    case team.mid:
-                      aktuelleStelle = team.adc;
-                      break;
-                    case team.adc:
-                      aktuelleStelle = team.supp;
-                      break;
-                    default:
-                  }
+                  aktuelleStelle += 1
                 }
               }
               if (i == reresult.length - 1) {
-                aktuelleStelle.push(currentString);
+                team.lanes[aktuelleStelle]?.push(currentString);
               }
-              team.cleanUp()
+       
             }
 
             teamArray.push(team);
