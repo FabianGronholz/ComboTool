@@ -15,12 +15,28 @@ export class TrelloService {
   public teamObservable = this.teamSubject.asObservable();
 
   public editCard(x: string) {
-    //link nicht fertig ich muss noch an die cardId von Trello kommen
     this.http
       .delete(
         'https://api.trello.com/1/cards/' +
           x +
           '?key=6068dbcc09d9708b859bc1f76581564f&token=ebd58cac0c5804b59cbf74dcfdc45565931d1ec6e13c4317ce52878576a71514'
+      )
+      .subscribe({
+        next: () => {
+          this.getCards();
+        },
+      });
+  }
+
+  public deleteChamp(cardID: string, newdesc: string) {
+    this.http
+      .put(
+        'https://api.trello.com/1/cards/' +
+          cardID +
+          '?key=6068dbcc09d9708b859bc1f76581564f&token=ebd58cac0c5804b59cbf74dcfdc45565931d1ec6e13c4317ce52878576a71514' +
+          '&desc=' +
+          newdesc,
+        {}
       )
       .subscribe({
         next: () => {
@@ -53,7 +69,6 @@ export class TrelloService {
       )
       .subscribe({
         next: (result) => {
-          console.log(result);
           let teamArray: Team[] = [];
           for (let i = 0; i < result.length; i++) {
             //@ts-ignore
@@ -69,36 +84,64 @@ export class TrelloService {
             const regexLetter: RegExp = new RegExp('[a-zA-Z]');
             const regexKomma: RegExp = new RegExp(',');
             const regexSlash: RegExp = new RegExp('/');
+            let lastWasKomma = false;
             team.name = ['Combo' + i];
             for (let i = 0; i < reresult.length; i++) {
               if (reresult.charAt(i).match(regexLetter)) {
                 currentString += reresult.charAt(i);
+                lastWasKomma = false;
               } else if (reresult.charAt(i).match(regexKomma)) {
-                aktuelleStelle.push(currentString);
-                currentString = '';
+                if (!lastWasKomma && i != 0) {
+                  aktuelleStelle.push(currentString);
+                  currentString = '';
+                  lastWasKomma = true;
+                } else {
+                  //do nothing
+                }
               } else if (reresult.charAt(i).match(regexSlash)) {
-                aktuelleStelle.push(currentString);
-                currentString = '';
-                switch (aktuelleStelle) {
-                  case team.top:
-                    aktuelleStelle = team.jung;
-                    break;
-                  case team.jung:
-                    aktuelleStelle = team.mid;
-                    break;
-                  case team.mid:
-                    aktuelleStelle = team.adc;
-                    break;
-                  case team.adc:
-                    aktuelleStelle = team.supp;
-                    break;
-                  default:
+                if (!lastWasKomma) {
+                  lastWasKomma = true;
+                  aktuelleStelle.push(currentString);
+                  currentString = '';
+                  switch (aktuelleStelle) {
+                    case team.top:
+                      aktuelleStelle = team.jung;
+                      break;
+                    case team.jung:
+                      aktuelleStelle = team.mid;
+                      break;
+                    case team.mid:
+                      aktuelleStelle = team.adc;
+                      break;
+                    case team.adc:
+                      aktuelleStelle = team.supp;
+                      break;
+                    default:
+                  }
+                } else if (lastWasKomma) {
+                  switch (aktuelleStelle) {
+                    case team.top:
+                      aktuelleStelle = team.jung;
+                      break;
+                    case team.jung:
+                      aktuelleStelle = team.mid;
+                      break;
+                    case team.mid:
+                      aktuelleStelle = team.adc;
+                      break;
+                    case team.adc:
+                      aktuelleStelle = team.supp;
+                      break;
+                    default:
+                  }
                 }
               }
               if (i == reresult.length - 1) {
                 aktuelleStelle.push(currentString);
               }
+              team.cleanUp()
             }
+
             teamArray.push(team);
           }
           this.teamSubject.next(teamArray);

@@ -13,6 +13,7 @@
             src="../assets/images/{{ champ }}Square.png"
             alt=""
           />
+          <div (click)="deleteChamp(champ, team.getId())" class="absolute w-[20%] h-[20%] top-0 right-0 text-red-600 text-3xl hover:c cursor-pointer">X</div>
         </div>
       </div>
     </div>

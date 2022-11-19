@@ -1,10 +1,10 @@
 export class Team {
   name: string[];
-  top: string[];
-  jung: string[];
-  mid: string[];
-  adc: string[];
-  supp: string[];
+  public top: string[];
+  public jung: string[];
+  public mid: string[];
+  public adc: string[];
+  public supp: string[];
 
   constructor(name: string[], top: string[], jung: string[], mid: string[], adc: string[], supp: string[]) {
     this.name = name;
@@ -32,6 +32,20 @@ export class Team {
 
   public iterable() {
     return [this.top, this.jung, this.mid, this.adc, this.supp];
+  }
+
+  public getTop(){
+    return this.top
+  }
+
+  public setAll(){
+    if(this.top[0] == ''){this.top = [];}
+    
+    if(this.supp[0] == ''){this.supp = [];}
+  }
+
+  public cleanUp(){
+    this.setAll()
   }
 
   private cardId: string = '';

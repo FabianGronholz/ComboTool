@@ -1,3 +1,4 @@
+import { Xliff2 } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
@@ -34,6 +35,17 @@ export class AppComponent implements OnInit {
 
   deleteMe(x: Team){
     this.trello.editCard(x.getId())
+  }
+
+  deleteChamp(champname: string, cardId: string){
+    let x2 = '';
+    this.teamArray.forEach(value => {
+      if(value.getId() == cardId){
+        x2 = value.toString().replace(champname, '')
+      }
+    })
+    
+    this.trello.deleteChamp(cardId, x2)
   }
 
 }
