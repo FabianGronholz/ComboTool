@@ -1,6 +1,6 @@
 <div class="h-full w-full">
   <div id="header" class="w-full h-[10%] bg-green-800">
-    <button>Create Comb</button>
+    <button (click)="openDialog()">Create Comb</button>
   </div>
   <div id="content" class="w-full h-[90%]">
     <div class="flex flex-row" *ngFor="let lane of team.iterable()">
