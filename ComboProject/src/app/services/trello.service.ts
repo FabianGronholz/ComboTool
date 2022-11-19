@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 export class TrelloService {
   constructor(public http: HttpClient) {}
   public team!: Team;
-  public teamSubject = new BehaviorSubject<Team>(new Team)
+  public teamSubject = new BehaviorSubject<Team>(new Team([],[],[],[],[]))
   public teamObservable = this.teamSubject.asObservable();
 
   public createCard(name: string, desc: string) {
@@ -35,7 +35,7 @@ export class TrelloService {
         next: (result) => {
           //@ts-ignore
           let reresult: string = result[0].desc
-          let team: Team = new Team()
+          let team: Team = new Team([],[],[],[],[])
           let aktuelleStelle: string[] = team.top
           let currentString = ""
           const regexLetter: RegExp = new RegExp('[a-zA-Z]')

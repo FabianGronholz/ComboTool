@@ -13,7 +13,7 @@ import { TrelloService } from './services/trello.service';
 export class AppComponent implements OnInit {
   title = 'ComboProject';
 
-  public team: Team = new Team();
+  public team: Team = new Team([],[],[],[],[]);
 
   constructor(public trello: TrelloService,
    public matDialog: MatDialog){}

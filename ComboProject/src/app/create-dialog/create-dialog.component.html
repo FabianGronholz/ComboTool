@@ -1,3 +1,25 @@
-<form>
-    
-</form>
+<div class="flex flex-col">
+    <label >CombName</label>
+    <input [(ngModel)]="combName" type="text" />
+</div>
+<div class="flex flex-col">
+    <label >Top</label>
+    <input [(ngModel)]="top" type="text" />
+</div>
+<div class="flex flex-col">
+    <label >Jung</label>
+    <input [(ngModel)]="jung"  type="text" />
+</div>
+<div class="flex flex-col">
+    <label >Mid</label>
+    <input [(ngModel)]="mid" type="text" />
+</div>
+<div class="flex flex-col">
+    <label >ADC</label>
+    <input [(ngModel)]="adc" type="text" />
+</div>
+<div class="flex flex-col">
+    <label >SUPP</label>
+    <input [(ngModel)]="supp" type="text" />
+</div>
+<button (click)="send()">Send</button>
