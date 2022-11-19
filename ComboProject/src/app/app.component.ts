@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 import { CreateDialogComponent } from './create-dialog/create-dialog.component';
 import { Team } from './models.ts/Team';
 import { TrelloService } from './services/trello.service';
@@ -13,7 +14,7 @@ import { TrelloService } from './services/trello.service';
 export class AppComponent implements OnInit {
   title = 'ComboProject';
 
-  public teamArray: Team[] = [new Team([],[],[],[],[])];
+  public teamArray: Team[] = [new Team([''],[],[],[],[],[])];
 
   constructor(public trello: TrelloService,
    public matDialog: MatDialog){}
@@ -29,6 +30,10 @@ export class AppComponent implements OnInit {
 
   public openDialog(){
     this.matDialog.open(CreateDialogComponent)
+  }
+
+  deleteMe(x: Team){
+    this.trello.editCard(x.getId())
   }
 
 }

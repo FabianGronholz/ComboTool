@@ -1,10 +1,11 @@
 <div class="h-full w-full">
-  <div id="header" class="w-full h-[10%] bg-green-800">
+  <div id="header" class="w-full h-[10%] bg-blue-400">
     <button (click)="openDialog()">Create Comb</button>
   </div>
-  <div id="content" class="w-full h-[90%] flex flex-row">
-    <div *ngFor="let team of teamArray">
-    <div class="flex flex-row" *ngFor="let lane of team.iterable()">
+  <div id="content" class="w-full h-[90%] flex flex-row gap-2">
+    <div *ngFor="let team of teamArray; let i = index">
+      <div>{{team.getName()}}</div>
+    <div class="flex flex-row" *ngFor="let lane of team.iterable(); let j = index">
       <div *ngFor="let champ of lane">
         <div class="w-[10vh] h-[10vh] relative">
           <img
@@ -15,6 +16,7 @@
         </div>
       </div>
     </div>
+    <div (click)="deleteMe(team)">Delete</div>
   </div>
   </div>
 </div>
