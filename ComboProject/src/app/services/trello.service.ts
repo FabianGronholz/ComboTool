@@ -70,7 +70,7 @@ export class TrelloService {
                     console.log('done')
                 }
               }
-              if(i == reresult.length){
+              if(i == reresult.length - 1){
                 aktuelleStelle.push(currentString)
               }
           }
